@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Волонтерські новини | Головна</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0057b7;
+            --secondary-color: #ffd700;
+            --accent-color: #4fc3a1;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0; padding: 0;
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo i { font-size: 1.8rem; color: var(--secondary-color);}
+        h1 {
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        nav a:hover { color: var(--secondary-color);}
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .hero-content { max-width: 800px; padding: 0 20px; }
+        .hero h2 {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background-color: #e6c200;
+            transform: translateY(-2px);
+        }
+        .news-feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .news-image { width: 100%; height: 200px; object-fit: cover; }
+        .news-preview {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex; flex-direction: column;
+        }
+        .news-title {
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: 500;
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+        .news-excerpt {
+            color: var(--gray-color);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        .news-author { display: flex; align-items: center; gap: 5px; }
+        .news-date { display: flex; align-items: center; gap: 5px; }
+        .news-tag {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-column h3 {
+            font-family: 'Ubuntu', sans-serif;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 10px; }
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-column a:hover { color: white; }
+        .social-links { display: flex; gap: 15px; margin-top: 15px;}
+        .social-links a { color: white; font-size: 1.2rem; transition: var(--transition);}
+        .social-links a:hover { color: var(--secondary-color);}
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        /* Article Page Styles */
+        .article-header {
+            background-color: white;
+            padding: 40px 0;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        .article-container { max-width: 800px; margin: 0 auto;}
+        .article-title {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            color: var(--gray-color);
+        }
+        .article-author { display: flex; align-items: center; gap: 10px;}
+        .article-author img {
+            display: none; /* Сховано фото журналістки */
+        }
+        .article-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        .article-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        .article-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .article-content h2,
+        .article-content h3 {
+            font-family: 'Ubuntu', sans-serif;
+            margin: 30px 0 20px;
+            color: var(--primary-color);
+        }
+        .article-content h2 { font-size: 1.8rem;}
+        .article-content h3 { font-size: 1.5rem;}
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .dev-section, .dev-modal {
+            background: #fff4cc;
+            color: #665200;
+            border: 1px solid #ffe066;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 70px auto 50px auto;
+            max-width: 600px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .dev-modal {
+            position:fixed;top:0;left:0;width:100vw;height:100vh;
+            background:rgba(0,0,0,0.3);
+            display:flex;align-items:center;justify-content:center;
+            z-index:1000;
+            margin:0; padding:0;
+        }
+        .dev-modal > div {
+            background: #fff4cc;
+            color: #665200;
+            border: 1px solid #ffe066;
+            border-radius: 8px;
+            padding: 40px 30px 25px 30px;
+            max-width: 400px;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .dev-modal button {
+            margin-top:20px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 15px;}
+            nav ul { gap: 15px;}
+            .hero { height: 300px;}
+            .hero h2 { font-size: 2rem;}
+            .news-feed { grid-template-columns: 1fr;}
+            .article-title { font-size: 1.8rem;}
+            .article-content { padding: 20px;}
+        }
+        /* Utility classes */
+        .hidden { display: none !important;}
+    </style>
+</head>
+<body>
+    <!-- Main Page -->
+    <div id="mainPage">
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-hands-helping"></i>
+                    <h1>Волонтерські новини</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-page="mainPage">Головна</a></li>
+                        <li><a href="#" class="nav-link" data-page="news">Новини</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">Про нас</a></li>
+                        <li><a href="#" class="nav-link" data-page="contacts">Контакти</a></li>
+                        <li><a href="#" class="nav-link" data-page="stories">Історії</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Волонтерський рух України</h2>
+                    <p>Історії тих, хто змінює країну своєю добротою та відданістю</p>
+                    <button class="btn" id="joinBtn">Долучитися</button>
+                </div>
+            </section>
+
+            <section id="newsSection">
+                <h2 class="section-title">Останні новини</h2>
+               <div class="news-feed">
+    <!-- News Card 1 -->
+    <div class="news-card" data-id="1">
+        <img src="https://porady.org.ua/sites/default/files/2022-12/%D0%91%D0%B5%D0%B7%20%D0%B8%D0%BC%D0%B5%D0%BD%D0%B8.jpg" alt="Волонтерський феномен" class="news-image">
+        <div class="news-preview">
+            <span class="news-tag">Феномен</span>
+            <h3 class="news-title">Український волонтерський феномен: як допомога перетворилась на національний рух</h3>
+            <p class="news-excerpt">З перших днів повномасштабного вторгнення Росії в Україну українці показали світу приклад безпрецедентної мобілізації громадянського суспільства...</p>
+            <div class="news-meta">
+                <span class="news-author"><i class="fas fa-user"></i> Баранова Яна</span>
+                <span class="news-date"><i class="far fa-calendar-alt"></i> 15.06.2024</span>
+            </div>
+        </div>
+    </div>
+    <!-- News Card 2 -->
+    <div class="news-card" data-id="2">
+        <img src="https://st2.depositphotos.com/1518767/7662/i/450/depositphotos_76624915-stock-photo-happy-volunteers-putting-their-hands.jpg" alt="Суспільне як медіамайданчик" class="news-image">
+        <div class="news-preview">
+            <span class="news-tag">Медіа</span>
+            <h3 class="news-title">"Суспільне" як медіамайданчик підтримки: як медіа допомагають волонтерам</h3>
+            <p class="news-excerpt">Війна в Україні стала не лише випробуванням для армії та громадян, а й для українських медіа. "Суспільне" за цей час стало головним інформаційним партнером...</p>
+            <div class="news-meta">
+                <span class="news-author"><i class="fas fa-user"></i> Баранова Яна</span>
+                <span class="news-date"><i class="far fa-calendar-alt"></i> 10.06.2024</span>
+            </div>
+        </div>
+    </div>
+    <!-- News Card 3 -->
+    <div class="news-card" data-id="3">
+        <img src="https://cs.detector.media/doc/images/news/archive/2021/185781/i75_ArticleImage_185781.webp" alt="Волонтери на передовій" class="news-image">
+        <div class="news-preview">
+            <span class="news-tag">Передова</span>
+            <h3 class="news-title">Волонтери на передовій: історії героїв, які допомагають ЗСУ</h3>
+            <p class="news-excerpt">Повномасштабна війна Росії проти України стала іспитом на міцність не лише для армії, але й для цивільних. Тисячі українців об’єдналися в потужний волонтерський фронт...</p>
+            <div class="news-meta">
+                <span class="news-author"><i class="fas fa-user"></i> Баранова Яна</span>
+                <span class="news-date"><i class="far fa-calendar-alt"></i> 05.06.2024</span>
+            </div>
+        </div>
+    </div>
+    <!-- News Card 4 -->
+    <div class="news-card" data-id="4">
+        <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=800&q=80" alt="Гуманітарний фронт" class="news-image">
+        <div class="news-preview">
+            <span class="news-tag">Гуманітарка</span>
+            <h3 class="news-title">Гуманітарний фронт: як волонтери рятують мирних українців</h3>
+            <p class="news-excerpt">Поки українські військові героїчно тримають фронт на передовій, в тилу діє ще один фронт — гуманітарний. Це тисячі волонтерів, які щоденно допомагають мирним жителям...</p>
+            <div class="news-meta">
+                <span class="news-author"><i class="fas fa-user"></i> Баранова Яна</span>
+                <span class="news-date"><i class="far fa-calendar-alt"></i> 01.06.2024</span>
+            </div>
+        </div>
+    </div>
+    <!-- News Card 5 -->
+    <div class="news-card" data-id="5">
+        <img src="https://static.ukrinform.com/photos/2022_11/thumb_files/630_360_1668611781-962.png" alt="Майбутнє волонтерства" class="news-image">
+        <div class="news-preview">
+            <span class="news-tag">Перспективи</span>
+            <h3 class="news-title">Майбутнє волонтерського руху: виклики, перспективи і роль медіа</h3>
+            <p class="news-excerpt">Український волонтерський рух вже увійшов в історію як один із найпотужніших громадських феноменів ХХІ століття. Проте війна триває, і перед волонтерами постають нові виклики...</p>
+            <div class="news-meta">
+                <span class="news-author"><i class="fas fa-user"></i> Баранова Яна</span>
+                <span class="news-date"><i class="far fa-calendar-alt"></i> 25.05.2024</span>
+            </div>
+        </div>
+    </div>
+</div>
+            </section>
+        </main>
+
+       <footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Волонтерські новини</h3>
+                <p>Найсвіжіші матеріали про волонтерський рух в Україні та світі.</p>
+                <div class="social-links">
+                    <a href="#" class="dev-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="dev-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="dev-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="dev-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="dev-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Розділи</h3>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="mainPage">Головна</a></li>
+                    <li><a href="#" class="nav-link" data-page="news">Новини</a></li>
+                    <li><a href="#" class="nav-link" data-page="stories">Історії</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">Про нас</a></li>
+                    <li><a href="#" class="nav-link" data-page="contacts">Контакти</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Категорії</h3>
+                <ul>
+                    <li><a href="#" class="dev-link">Гуманітарна допомога</a></li>
+                    <li><a href="#" class="dev-link">Допомога ЗСУ</a></li>
+                    <li><a href="#" class="dev-link">Медіа про волонтерів</a></li>
+                    <li><a href="#" class="dev-link">Міжнародна допомога</a></li>
+                    <li><a href="#" class="dev-link">Історії волонтерів</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Контакти</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> Yanaandbooks@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> 0993193261</li>
+                    <li><i class="fas fa-map-marker-alt"></i> м. Мукачево, проспект Потушняка</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Волонтерські новини. Всі права захищені.</p>
+        </div>
+    </div>
+</footer>
+    </div>
+
+    <!-- Article 1 -->
+    <div id="article1" class="hidden">
+        <div class="container">
+            <a href="#" class="back-link" data-back="news"><i class="fas fa-arrow-left"></i> Назад до новин</a>
+            <div class="article-header">
+                <div class="container article-container">
+                    <span class="news-tag">Феномен</span>
+                    <h1 class="article-title">Український волонтерський феномен: як допомога перетворилась на національний рух</h1>
+                    <div class="article-meta">
+                        <div class="article-author">
+                            <span>Баранова Яна Юріївна, студентка факультету журналістики</span>
+                        </div>
+                        <span class="news-date"><i class="far fa-calendar-alt"></i> 15.06.2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="article-content">
+                <p>З перших днів повномасштабного вторгнення Росії в Україну українці показали світу приклад безпрецедентної мобілізації громадянського суспільства. Кожен, хто не взяв до рук зброю, шукав інші способи бути корисним. Так народився справжній національний феномен – всеукраїнський волонтерський рух. Він став не лише підтримкою для Збройних сил України, але й соціальним щитом для мільйонів переселенців, поранених, дітей та людей похилого віку.</p>
+                <p>За даними Київського міжнародного інституту соціології, станом на кінець 2023 року понад 80% громадян України хоча б раз брали участь у волонтерських ініціативах. Це стало унікальним прикладом консолідації нації перед спільною загрозою. Українці допомагали своїми руками, грошима, часом, знаннями і навіть житлом тим, хто цього потребував найбільше.</p>
+                <p>Поява численних фондів та організацій – “Повернись живим”, “Фонд Сергія Притули”, “Фонд Рината Ахметова”, “Razom for Ukraine”, а також сотень локальних ініціатив стала відповіддю на виклики війни. Вони забезпечили стале постачання гуманітарної допомоги, тактичного спорядження, аптечок, автівок та іншої необхідної амуніції для фронту.</p>
+                <p>Ще одним визначальним чинником стало те, що волонтерство в Україні отримало системний медійний супровід. Зокрема, саме "Суспільне" активно висвітлює діяльність волонтерів у своїх сюжетах, репортажах та інтерв’ю. Це не тільки допомагає організаціям залучати додаткові ресурси, а й підвищує рівень довіри суспільства до волонтерського руху.</p>
+                <p>Соціальні мережі також відіграли свою роль. Українські волонтери швидко адаптувалися до нових реалій, організовуючи збори коштів через Facebook, Instagram, TikTok, YouTube та Telegram. Такі формати дозволили залучити підтримку не тільки в Україні, а й за її межами – від української діаспори до міжнародних партнерів.</p>
+                <p>Волонтерський рух продовжує еволюціонувати. Якщо на початку війни основна увага приділялася негайному постачанню амуніції та їжі, то з часом з’явилися довгострокові програми психологічної реабілітації, навчання, відбудови постраждалих територій.</p>
+                <p>На думку соціологів, феномен українського волонтерства полягає в поєднанні високого рівня самоорганізації, культури взаємодопомоги, горизонтальних зв’язків та взаємної довіри, які дозволяють громадянам швидко реагувати на надзвичайні виклики.</p>
+                <p>Цей рух став основою для відновлення країни, моральної опори для тих, хто перебуває на фронті, та джерелом надії для всіх, хто вірить у перемогу України. Українське волонтерство – це не лише соціальне явище, а й частина нової ідентичності українського народу.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article 2 -->
+    <div id="article2" class="hidden">
+        <div class="container">
+            <a href="#" class="back-link" data-back="news"><i class="fas fa-arrow-left"></i> Назад до новин</a>
+            <div class="article-header">
+                <div class="container article-container">
+                    <span class="news-tag">Медіа</span>
+                    <h1 class="article-title">"Суспільне" як медіамайданчик підтримки: як медіа допомагають волонтерам</h1>
+                    <div class="article-meta">
+                        <div class="article-author">
+                            <span>Баранова Яна Юріївна, студентка факультету журналістики</span>
+                        </div>
+                        <span class="news-date"><i class="far fa-calendar-alt"></i> 10.06.2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="article-content">
+                <p>Війна в Україні стала не лише випробуванням для армії та громадян, а й для українських медіа. Завдання інформувати, не створюючи паніки, підтримувати моральний дух та допомагати організовувати допомогу лягло передусім на плечі суспільного мовника. “Суспільне” за цей час стало головним інформаційним партнером українських волонтерських ініціатив, ставши справжнім медіамайданчиком допомоги.</p>
+                <p>З початку повномасштабного вторгнення “Суспільне” змінило формат мовлення, надавши пріоритет висвітленню реальної ситуації на фронті, історіям людей, які борються за свою країну, та волонтерському руху. Щоденні включення, репортажі, документальні фільми, програми-розслідування стали основою контенту.</p>
+                <p>Особливу увагу телеканал та його регіональні редакції приділяють висвітленню діяльності волонтерів: як великих фондів, так і невеликих локальних ініціатив. Саме на “Суспільному” регулярно звучать історії про водіїв-волонтерів, які доставляють гуманітарні вантажі, студентів, які друкують деталі для дронів, чи мешканців сіл, які допомагають переселенцям.</p>
+                <p>Рубрика “Герої тилу”, започаткована “Суспільним”, стала символом вдячності тим, хто працює поза фронтом. Глядачі могли побачити реальні історії вчителів, медиків, водіїв, механіків, що на власний страх і ризик допомагають фронту. Такі приклади слугують не лише інформативно, а й мотиваційно.</p>
+                <p>Значну роль у роботі зі слухачами та глядачами відіграють інтерактивні формати. “Суспільне” активно організовує прямі включення, опитування, тематичні марафони. Під час прямих ефірів громадяни можуть поставити запитання, дізнатися про актуальні потреби організацій, навіть приєднатися до зборів коштів.</p>
+                <p>Онлайн-платформи “Суспільного” – сайт, YouTube-канал, Telegram, Facebook – стали додатковим інструментом поширення інформації. Вони дозволили розширити аудиторію, включивши до неї молодь і користувачів, які отримують новини переважно через інтернет.</p>
+                <p>Крім висвітлення історій, “Суспільне” виступило посередником між громадянами і волонтерськими організаціями. Публікація контактів, реквізитів, посилань на офіційні сторінки фондів значно полегшила процес залучення коштів та ресурсів до допомоги ЗСУ та постраждалим цивільним.</p>
+                <p>Варто зазначити, що в умовах війни “Суспільне” дотримується високих стандартів журналістики: перевіряє інформацію, уникає спекуляцій, не публікує даних, які можуть нашкодити військовим чи волонтерам. Це дозволяє медіа залишатися одним із найнадійніших джерел інформації.</p>
+                <p>Суспільний мовник також активно співпрацює з міжнародними організаціями, надаючи їм інформацію про реальний стан справ в Україні та діяльність громадського сектору. Така взаємодія дозволяє доносити до світової спільноти приклади українського волонтерства як феномену національного масштабу.</p>
+                <p>Медіа-підтримка з боку “Суспільного” стала важливим чинником формування позитивного образу українського волонтера. Завдяки контенту телеканалу волонтерський рух отримав потужне моральне і організаційне підкріплення.</p>
+                <p>Журналісти “Суспільного” неодноразово наголошують, що їхнім головним завданням є показати справжніх героїв, які без зброї допомагають наближати перемогу України. Саме в цьому і полягає місія суспільного мовника.</p>
+            </div>
+        </div>
+    </div>
+
+  <!-- Article 3 (без фото, текст повністю) -->
+<div id="article3" class="hidden">
+    <div class="container">
+        <a href="#" class="back-link" data-back="news"><i class="fas fa-arrow-left"></i> Назад до новин</a>
+        <div class="article-header">
+            <div class="container article-container">
+                <span class="news-tag">Передова</span>
+                <h1 class="article-title">Волонтери на передовій: історії героїв, які допомагають ЗСУ</h1>
+                <div class="article-meta">
+                    <div class="article-author">
+                        <span>Баранова Яна Юріївна, студентка факультету журналістики</span>
+                    </div>
+                    <span class="news-date"><i class="far fa-calendar-alt"></i> 05.06.2024</span>
+                </div>
+            </div>
+        </div>
+        <div class="article-content">
+            <p>Повномасштабна війна Росії проти України стала іспитом на міцність не лише для армії, але й для цивільних. Тисячі українців об’єдналися в потужний волонтерський фронт, який невидимо, але потужно допомагає фронтовим підрозділам. Історії таких людей – це приклади надзвичайної мужності, людяності та жертовності.</p>
+            <p>Волонтери допомагають армії на всіх рівнях: від збору коштів на дрони, тепловізори, автомобілі, бронежилети до доставки продуктів, медикаментів та гуманітарної допомоги в найгарячіші точки. Один із найяскравіших прикладів – волонтерські організації «Повернись живим» і «Фонд Сергія Притули», які лише за перші місяці вторгнення зібрали сотні мільйонів гривень на підтримку ЗСУ.</p>
+            <p>Головними героями цих історій стають прості українці. Олена з Харкова, менеджерка середньої ланки, після початку війни залишила роботу і стала координаторкою гуманітарного штабу. Вона неодноразово доставляла допомогу в Ізюм, Балаклію, Лиман – навіть тоді, коли ці міста були під обстрілами.</p>
+            <p>Андрій із Львова, який раніше був фотографом, організував невелику волонтерську групу і власними силами евакуював понад 200 людей із Сєвєродонецька під час активних бойових дій. Його історія стала відомою після публікації у проєкті “Суспільного” «Люди війни».</p>
+            <p>“Суспільне” як суспільний мовник активно популяризує такі приклади. У циклі сюжетів «Герої тилу» розповідають про водіїв-волонтерів, які під постійною загрозою обстрілів доставляють гуманітарні вантажі, та про медиків-добровольців, які рятують життя у польових умовах.</p>
+            <p>Не менш важливою стала робота ремонтних команд, які створювали так звані «волонтерські автосервіси». Під Києвом, Дніпром, Запоріжжям з’явилися гаражі, де цивільні майстри безкоштовно ремонтують військову техніку та транспорт, що повертається з фронту.</p>
+            <p>Професійні айтішники, інженери, студенти об’єдналися в команди зі створення розвідувальних дронів, а також програмного забезпечення для координації доставки допомоги. Ці технологічні ініціативи отримали назву “волонтерські стартапи”.</p>
+            <p>Волонтери постійно ризикують власним життям. За даними Міжнародного Червоного Хреста, в Україні вже загинули десятки волонтерів, які доставляли допомогу в зони бойових дій. Проте це не зупиняє інших. Як зазначає керівник однієї з організацій: «Кожна врятована людина – це ще одна перемога».</p>
+            <p>Волонтерський фронт став невід’ємною частиною оборони України. Унікальна особливість українських волонтерів – їхня неймовірна самоорганізація без централізованих вказівок, де кожен знаходить свою роль і виконує її з максимальною відповідальністю.</p>
+            <p>Герої тилу довели, що навіть без зброї в руках можна захищати країну. Їхні історії, висвітлені “Суспільним”, надихають, викликають захоплення і закликають до єдності. Сотні тисяч українців сьогодні відчувають, що вони теж є частиною великої боротьби за свободу.</p>
+        </div>
+    </div>
+</div>
+
+    <!-- Article 4 -->
+    <div id="article4" class="hidden">
+        <div class="container">
+            <a href="#" class="back-link" data-back="news"><i class="fas fa-arrow-left"></i> Назад до новин</a>
+            <div class="article-header">
+                <div class="container article-container">
+                    <span class="news-tag">Гуманітарка</span>
+                    <h1 class="article-title">Гуманітарний фронт: як волонтери рятують мирних українців</h1>
+                    <div class="article-meta">
+                        <div class="article-author">
+                            <span>Баранова Яна Юріївна, студентка факультету журналістики</span>
+                        </div>
+                        <span class="news-date"><i class="far fa-calendar-alt"></i> 01.06.2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="article-content">
+                <p>Поки українські військові героїчно тримають фронт на передовій, в тилу діє ще один фронт — гуманітарний. Це тисячі волонтерів, які щоденно допомагають мирним жителям, що постраждали від війни: переселенцям, людям, що втратили житло, пораненим, людям похилого віку та дітям.</p>
+                <p>З перших днів війни гуманітарна катастрофа стала однією з головних проблем. За даними Управління Верховного комісара ООН у справах біженців (UNHCR), станом на середину 2024 року понад 6 мільйонів українців були змушені покинути свої домівки. Волонтери стали першими, хто почав евакуювати людей із зон бойових дій, забезпечувати їх найнеобхіднішим.</p>
+                <p>Однією з найважливіших форм допомоги стало створення центрів для переселенців. У школах, готелях, спортзалах, офісних приміщеннях волонтери організовували тимчасові прихистки. У Києві, Львові, Дніпрі, Тернополі та інших містах з’явилися гуманітарні хаби, що надавали притулок, харчування, одяг, юридичну та психологічну підтримку.</p>
+                <p>Волонтерські ініціативи також активно допомагали із забезпеченням медикаментами. Через порушення логістичних ланцюгів багато українців залишилися без необхідних ліків. Завдяки злагодженій роботі фондів, таких як “Tabletochki”, “Лікарі без кордонів” та багатьох локальних груп, вдалося забезпечити безперебійні поставки.</p>
+                <p>Не менш важливою була підтримка людей похилого віку та людей з інвалідністю. Волонтери організовували доставку продуктів та ліків додому, особливо в тих районах, які постраждали від обстрілів або були тимчасово окуповані.</p>
+                <p>Активно долучилися до гуманітарного фронту і молодіжні організації. Студенти, школярі, молоді фахівці створювали мобільні волонтерські команди, які евакуювали тварин, допомагали плести маскувальні сітки, готували їжу для переселенців.</p>
+                <p>“Суспільне” у своїх програмах детально висвітлює ці історії. Сюжети про евакуацію мешканців із Бахмута, Волновахи, Лимана, допомогу літнім людям у прифронтових селах або підтримку багатодітних родин набирають тисячі переглядів. Це дає змогу показати реальні обличчя війни і тих, хто щодня чинить добро в найтяжчих умовах.</p>
+                <p>Не можна не згадати й про міжнародну солідарність. Українські волонтери тісно співпрацювали з міжнародними фондами: World Central Kitchen, International Red Cross, UNICEF, які забезпечували харчування, воду, гігієнічні засоби для мільйонів українців.</p>
+                <p>Гуманітарний фронт існує завдяки високій довірі громадян до волонтерських організацій. За даними соціологічних опитувань, понад 75% українців схвально оцінюють діяльність волонтерів та готові їм допомагати.</p>
+                <p>Волонтери стали символом незламності та людяності українців. Їхні історії нагадують світові, що навіть у найтемніші часи існують ті, хто готовий простягнути руку допомоги. Гуманітарний фронт — це тил, який так само важливий для перемоги, як і бойові дії на передовій.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Article 5 -->
+    <div id="article5" class="hidden">
+        <div class="container">
+            <a href="#" class="back-link" data-back="news"><i class="fas fa-arrow-left"></i> Назад до новин</a>
+            <div class="article-header">
+                <div class="container article-container">
+                    <span class="news-tag">Перспективи</span>
+                    <h1 class="article-title">Майбутнє волонтерського руху: виклики, перспективи і роль медіа</h1>
+                    <div class="article-meta">
+                        <div class="article-author">
+                            <span>Баранова Яна Юріївна, студентка факультету журналістики</span>
+                        </div>
+                        <span class="news-date"><i class="far fa-calendar-alt"></i> 25.05.2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="article-content">
+                <p>Український волонтерський рух вже увійшов в історію як один із найпотужніших громадських феноменів ХХІ століття. Проте війна триває, і перед волонтерами постають нові виклики, що вимагають адаптації, стратегічного мислення та партнерства з іншими секторами.</p>
+                <p>Однією з ключових проблем є емоційне та фізичне виснаження волонтерів. За даними Фонду "Демократичні ініціативи", понад 60% активістів зізнаються, що потребують психологічної підтримки. Питання запобігання вигоранню та забезпечення підтримки самих волонтерів стає нагальним завданням для держави і громадських організацій.</p>
+                <p>Ще одним викликом є стабільність фінансування. Якщо в перші місяці повномасштабного вторгнення українці та світ активно донатили на потреби ЗСУ та гуманітарні потреби, то зараз спостерігається поступове зниження темпів зборів. Волонтерським організаціям доведеться шукати нові моделі сталого фінансування, залучення бізнесу, міжнародних грантів та створення соціальних підприємств.</p>
+                <p>Медіа, зокрема “Суспільне”, залишаються важливим союзником волонтерських ініціатив. Саме завдяки висвітленню реальних історій активістів, потреб, успіхів та викликів громадськість продовжує активно підтримувати волонтерів. “Суспільне” вже неодноразово довело, що може бути посередником між суспільством і волонтерськими структурами.</p>
+                <p>У майбутньому важливим стане розширення форм співпраці між журналістами та громадським сектором. Це можуть бути спільні інформаційні кампанії, навчальні проєкти, кросплатформні спецпроєкти, спрямовані на підтримку волонтерства.</p>
+                <p>Ще одна перспектива – це розвиток цифрових технологій. Волонтери дедалі активніше використовують мобільні додатки, краудфандингові платформи, чат-боти для координації допомоги, організації логістики та збору коштів. Поява “волонтерських стартапів” може стати однією з нових моделей ефективної взаємодії в умовах довготривалої кризи.</p>
+                <p>Значна увага має бути приділена і питанням прозорості. Високий рівень довіри до волонтерів в Україні базується на відкритих звітах, чесній комунікації, демонстрації результатів. Суспільні медіа повинні й надалі підтримувати цю практику, показуючи приклади добросовісних організацій.</p>
+                <p>Важливою тенденцією стане також залучення молоді. Уже сьогодні покоління Z активно бере участь у благодійних проєктах, часто через цифрові платформи. Роль медіа полягає в тому, щоб мотивувати молодь, показувати можливості для долучення, популяризувати історії ровесників-волонтерів.</p>
+                <p>Не можна забувати й про міжнародний аспект. Українські волонтери активно співпрацюють із діаспорою, міжнародними фондами, урядовими структурами. Відкрите і чесне висвітлення цієї співпраці може сприяти подальшому залученню ресурсів і розширенню глобальної солідарності.</p>
+                <p>У підсумку можна сказати, що український волонтерський рух переходить на новий рівень. Це вже не лише допомога тут і зараз, а й системна робота з формування нової моделі громадянського суспільства, де активна позиція, взаємодопомога і відповідальність стають нормою.</p>
+                <p>Медіа, й особливо “Суспільне”, залишаються важливим партнером цього процесу. Їхнє завдання – не лише інформувати, але й надихати, об’єднувати, допомагати знаходити нових партнерів і ресурси. Спільними зусиллями медіа і волонтерів Україна продовжить боротися і перемагати не лише на полі бою, а й на гуманітарному фронті.</p>
+            </div>
+        </div>
+    </div>
+   <!-- Modal for "Join" button -->
+<div id="joinModal" class="hidden" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;z-index:200;">
+    <div style="background:#fff;padding:30px 20px;border-radius:10px;max-width:400px;position:relative;text-align:center;">
+        <button id="closeJoinModal" style="position:absolute;top:10px;right:15px;background:none;border:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+        <h2 style="margin-bottom:16px;color:#0057b7;">Дякуємо за бажання долучитися!</h2>
+        <p>
+            Щоб приєднатися до нашої волонтерської спільноти, напишіть нам на
+            <a href="mailto:Yanaandbooks@gmail.com">Yanaandbooks@gmail.com</a>
+            або зателефонуйте
+            <a href="tel:0993193261">0993193261</a>.
+        </p>
+    </div>
+</div>
+    <!-- Modal for "В розробці" -->
+<div id="devModal" class="dev-modal hidden" style="background:rgba(0,0,0,0.66); position:fixed; top:0; left:0; width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; z-index:9999;">
+    <div id="devModalContent" style="background:white; padding:30px 20px; border-radius:10px; max-width:400px; position:relative; text-align:center;">
+        <span>Розділ ще в розробці</span>
+        <br>
+        <button id="closeDevModal">Закрити</button>
+    </div>
+</div>
+
+    <!-- Заглушка для сторінок в розробці -->
+    <div id="devSection" class="dev-section hidden">
+        <b>Розділ ще в розробці.</b>
+    </div>
+    <script>
+    // SPA-like навігація та показ статей, секцій, модалки
+
+    // Кешування DOM
+    const mainPage = document.getElementById('mainPage');
+    const newsSection = document.getElementById('newsSection');
+    const joinBtn = document.getElementById('joinBtn');
+    const joinModal = document.getElementById('joinModal');
+    const closeJoinModal = document.getElementById('closeJoinModal');
+
+    const devModal = document.getElementById('devModal');
+    const closeDevModal = document.getElementById('closeDevModal');
+    const devSection = document.getElementById('devSection');
+
+    // Для статей
+    const articleIds = ['article1', 'article2', 'article3', 'article4', 'article5'];
+    const articles = articleIds.map(id => document.getElementById(id)).filter(Boolean);
+
+    // Навігація по сайту (SPA-лайк)
+    document.addEventListener('click', function(e) {
+        // Навігація по меню
+        if (e.target.matches('.nav-link')) {
+            e.preventDefault();
+            const page = e.target.getAttribute('data-page');
+            if (page === 'mainPage') {
+                showMainPage();
+            } else if (page === 'news') {
+                showMainPage();
+                scrollToNews();
+            } else if (['about','contacts','stories'].includes(page)) {
+                showDevModal();
+            }
+        }
+        // Повернення до новин зі статті
+        if (e.target.matches('.back-link')) {
+            e.preventDefault();
+            showMainPage();
+            scrollToNews();
+        }
+        // Клац по заглушці/соцмережам/категоріям
+        if (e.target.matches('.dev-link')) {
+            e.preventDefault();
+            showDevModal();
+        }
+    });
+
+    // Клік по картці новини
+    document.querySelectorAll('.news-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const id = card.getAttribute('data-id');
+            showArticle('article' + id);
+        });
+    });
+
+    // Кнопка "Долучитися"
+    if (joinBtn) {
+        joinBtn.addEventListener('click', function() {
+            joinModal.classList.remove('hidden');
+        });
+    }
+    // Закрити модалку "Долучитися"
+    if (closeJoinModal) {
+        closeJoinModal.addEventListener('click', function() {
+            joinModal.classList.add('hidden');
+        });
+    }
+    // Закриття модалки по кліку поза нею
+    joinModal.addEventListener('click', function(e){
+        if(e.target === joinModal){ joinModal.classList.add('hidden'); }
+    });
+
+    // Закриття dev-модалки
+    if (closeDevModal) {
+        closeDevModal.addEventListener('click', function() {
+            devModal.classList.add('hidden');
+        });
+    }
+    devModal.addEventListener('click', function(e){
+        if (e.target === devModal) devModal.classList.add('hidden');
+    });
+
+    // Функції показу
+    function showMainPage() {
+        mainPage.classList.remove('hidden');
+        articles.forEach(a => a.classList.add('hidden'));
+        devSection.classList.add('hidden');
+        window.scrollTo(0,0);
+    }
+    function showArticle(articleId) {
+        mainPage.classList.add('hidden');
+        articles.forEach(a => a.classList.add('hidden'));
+        devSection.classList.add('hidden');
+        const el = document.getElementById(articleId);
+        if (el) {
+            el.classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+    }
+    // Прокрутка до секції новин
+    function scrollToNews() {
+        const newsSection = document.getElementById('newsSection');
+        if(newsSection){
+            setTimeout(()=>newsSection.scrollIntoView({behavior:'smooth'}), 150); // після показу
+        }
+    }
+    // Показати заглушку для about/contacts/stories/категорії/соцмережі
+    function showDevModal() {
+        devModal.classList.remove('hidden');
+    }
+    // SPA: при завантаженні головна
+    showMainPage();
+    </script>
+
+<script>
+document.getElementById('closeDevModal').onclick = function() {
+    document.getElementById('devModal').classList.add('hidden');
+};
+
+// Клік по напівпрозорій підкладці (фон модалки)
+document.getElementById('devModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.add('hidden');
+});
+
+// Клік по картці новини (закрити модалку)
+document.querySelectorAll('.news-card').forEach(card => {
+    card.addEventListener('click', function() {
+        document.getElementById('devModal').classList.add('hidden');
+        // showArticle('article' + card.getAttribute('data-id')); // якщо потрібно відкривати статтю
+    });
+});
+
+document.getElementById('closeDevModal').onclick = function() {
+    document.getElementById('devModal').classList.add('hidden');
+};
+
+// Закриття по кліку на фон (але не на біле вікно)
+document.getElementById('devModal').addEventListener('mousedown', function(e) {
+    if (e.target === this) this.classList.add('hidden');
+});
+
+</script>
+
+</body>
+</html>
